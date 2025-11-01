@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Taffy's Calculator</title>
+<style>
+body{display:flex;justify-content:center;align-items:center;block-size:100vh;margin:0;background:#222}
+.calculator{background:#333;padding:20px;border-radius:10px;box-shadow:0 0 20px rgba(0,0,0,0.5)}
+.display{inline-size:100%;block-size:60px;margin-block-end:10px;font-size:24px;text-align:end;padding:10px;box-sizing:border-box;background:#fff;border:none;border-radius:5px}
+.buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+button{block-size:60px;font-size:20px;border:none;border-radius:5px;cursor:pointer;background:#444;color:#fff}
+button:hover{background:#555}
+.operator{background:#ff9500}
+.operator:hover{background:#ffaa33}
+.equals{background:#ff9500}
+.clear{background:#a5a5a5;color:#000}
+.clear:hover{background:#bbb}
+</style>
+</head>
+<body>
+<div class="calculator">
+<input type="text" class="display" id="display" disabled>
+<div class="buttons">
+<button class="clear" onclick="clearDisplay()">C</button>
+<button onclick="appendToDisplay('/')" class="operator">÷</button>
+<button onclick="appendToDisplay('*')" class="operator">×</button>
+<button onclick="deleteLastChar()">⌫</button>
+<button onclick="appendToDisplay('7')">7</button>
+<button onclick="appendToDisplay('8')">8</button>
+<button onclick="appendToDisplay('9')">9</button>
+<button onclick="appendToDisplay('-')" class="operator">−</button>
+<button onclick="appendToDisplay('4')">4</button>
+<button onclick="appendToDisplay('5')">5</button>
+<button onclick="appendToDisplay('6')">6</button>
+<button onclick="appendToDisplay('+')" class="operator">+</button>
+<button onclick="appendToDisplay('1')">1</button>
+<button onclick="appendToDisplay('2')">2</button>
+<button onclick="appendToDisplay('3')">3</button>
+<button rowspan="2" class="equals" onclick="calculate()" style="grid-row: span 2">=</button>
+<button onclick="appendToDisplay('0')" style="grid-column: span 2">0</button>
+<button onclick="appendToDisplay('.')">.</button>
+</div>
+</div>
+<script>
+let display = document.getElementById('display');
+function appendToDisplay(value) {
+    if (display.value === 'Error') display.value = '';
+    display.value += value;
+}
+function clearDisplay() {
+    display.value = '';
+}
+function deleteLastChar() {
+    display.value = display.value.slice(0, -1);
+}
+function calculate() {
+    try {
+        display.value = eval(display.value.replace(/×/g, '*').replace(/÷/g, '/'));
+    } catch (e) {
+        display.value = 'Error';
+    }
+}
+</script>
+</body>
+</html>
